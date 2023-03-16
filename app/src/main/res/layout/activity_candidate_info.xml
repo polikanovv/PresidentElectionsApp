@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CandidateInfoActivity"
+    android:orientation="vertical"
+    android:layout_gravity="center">
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="80dp"
+        android:layout_height="45dp"
+        android:text="НАЗАД"
+        android:fontFamily="monospace"
+        android:id="@+id/buttonBack"
+        android:background="@drawable/button_shape"
+        android:layout_margin="10dp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:id="@+id/textSecondName"
+        android:textColor="@color/black"
+        android:textSize="25dp"
+        android:text="text1"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:id="@+id/textFirstName"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:text="text1"
+        android:layout_marginBottom="5dp"/>
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:id="@+id/imageCandidate"
+        android:scaleType="fitCenter"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="viewStart"
+        android:id="@+id/textParty"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:text="text1"
+        android:layout_margin="7dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textDescriptions"
+            android:textSize="15dp"
+            android:text="text1"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:textColor="@color/black"/>
+
+    </ScrollView>
+
+
+
+
+
+
+</LinearLayout>
