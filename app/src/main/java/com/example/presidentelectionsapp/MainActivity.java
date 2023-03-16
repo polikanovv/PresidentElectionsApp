@@ -35,10 +35,9 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity {
     ArrayList<Candidate> candidatesList;
     TextView totalVotes;
-    int preSelectedIndex = -1;
-    int beforeSelectedIndex = -1;
-    String PATH_TO_FILES = "/data/user/0/com.example.presidentelectionsapp/cache/imagesElections/";
-    String URL = "https://adlibtech.ru/elections/api/getcandidates.php";
+    static final String PATH_TO_FILES = "/data/user/0/com.example.presidentelectionsapp/cache/imagesElections/";
+    static final String URL_ADD = "https://adlibtech.ru/elections/api/addvote.php";
+    static final String URL_GET_CANDIDATES = "https://adlibtech.ru/elections/api/getcandidates.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         candidatesList = new ArrayList<>();
         MyAsyncTask myAsyncTask = new MyAsyncTask(candidatesList,totalVotes);
         try {
-            myAsyncTask.execute(URL).get();
+            myAsyncTask.execute(URL_GET_CANDIDATES).get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

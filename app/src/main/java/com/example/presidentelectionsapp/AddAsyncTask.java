@@ -1,5 +1,7 @@
 package com.example.presidentelectionsapp;
 
+import static com.example.presidentelectionsapp.MainActivity.URL_ADD;
+
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
@@ -17,7 +19,7 @@ public class AddAsyncTask extends AsyncTask<Void,Void,Void> {
     ArrayList<Candidate> candidatesList;
     int preSelectedIndex;
     int beforeSelectedIndex;
-    String URL = "https://adlibtech.ru/elections/api/addvote.php";
+
 
     AddAsyncTask(ArrayList<Candidate> candidatesList,int preSelectedIndex,int beforeSelectedIndex) {
         this.candidatesList = candidatesList;
@@ -43,7 +45,7 @@ public class AddAsyncTask extends AsyncTask<Void,Void,Void> {
             .add("last_id", idBefore)
             .build();
         Request request = new Request.Builder()
-            .url(URL)
+            .url(URL_ADD)
             .post(formBody)
             .build();
         Response responses = null;
