@@ -1,5 +1,7 @@
 package com.example.presidentelectionsapp;
 
+import java.util.HashMap;
+
 public class Candidate {
     private String id;
     private String firstname;
@@ -10,7 +12,7 @@ public class Candidate {
     private String image;
     private String votes;
     private String totalVotes;
-    private String gender;
+    private HashMap<String, String> unknownData = new HashMap<>();
     private boolean isChecked;
 
     Candidate(String id, String firstname, String secondname, String party, String descriptions, String web, String image, String votes, String totalVotes, String gender, boolean isChecked){
@@ -23,7 +25,6 @@ public class Candidate {
         this.image = image;
         this.votes = votes;
         this.totalVotes = totalVotes;
-        this.gender = gender;
         this.isChecked = isChecked;
     }
 
@@ -35,9 +36,8 @@ public class Candidate {
         this.descriptions = "";
         this.web = "";
         this.image = "";
-        this.votes = "";
-        this.totalVotes = "";
-        this.gender = "";
+        this.votes = "0";
+        this.totalVotes = "0";
         this.isChecked = false;
     }
 
@@ -107,6 +107,7 @@ public class Candidate {
         isChecked = checked;
     }
 
-    public String getGender() { return gender; }
-    public void setGender(String gender) { this.gender = gender; }
+    public HashMap<String, String> getUnknownData() { return unknownData; }
+    public void setUnknownData(HashMap<String, String> unknownData) { this.unknownData = unknownData; }
+
 }

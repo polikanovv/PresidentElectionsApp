@@ -67,27 +67,22 @@ class MyAsyncTask extends AsyncTask<String, Void, ArrayList<Candidate>> {
             for (int i = 0; i < allCandidatesJson.length() - 1; i++) {
                 candidatesList.add(new Candidate());
                 JSONObject candidate = allCandidatesJson.getJSONObject(i);
-                String candidateId = candidate.getString("id");
-                String candidateName = candidate.getString("firstname");
-                String candidateSurname = candidate.getString("secondname");
-                String candidateParty = candidate.getString("party");
-                String candidateDescriptions = candidate.getString("description");
-                String candidateWeb = candidate.getString("web");
-                String candidateImage = candidate.getString("image");
-                String candidateVotes = candidate.getString("votes");
-                String candidateGender = "no value";
-                if (candidate.has("gender")) {
-                    candidateGender = candidate.getString("gender");
+                for (int j = 0; j < candidate.names().length(); j++){
+                    String key = (String) candidate.names().getString(j);
+                    String value = candidate.getString(key);
+                    switch (key){
+                        case "id": candidatesList.get(i).setId(value); break;
+                        case "firstname": candidatesList.get(i).setFirstname(value); break;
+                        case "secondname": candidatesList.get(i).setSecondname(value); break;
+                        case "party": candidatesList.get(i).setParty(value); break;
+                        case "description": candidatesList.get(i).setDescriptions(value); break;
+                        case "web": candidatesList.get(i).setWeb(value); break;
+                        case "image": candidatesList.get(i).setImage(value); break;
+                        case "votes": candidatesList.get(i).setVotes(value); break;
+                        default: candidatesList.get(i).getUnknownData().put(key,value);
+                    }
                 }
-                candidatesList.get(i).setId(candidateId);
-                candidatesList.get(i).setFirstname(candidateName);
-                candidatesList.get(i).setSecondname(candidateSurname);
-                candidatesList.get(i).setParty(candidateParty);
-                candidatesList.get(i).setDescriptions(candidateDescriptions);
-                candidatesList.get(i).setWeb(candidateWeb);
-                candidatesList.get(i).setImage(candidateImage);
-                candidatesList.get(i).setVotes(candidateVotes);
-                candidatesList.get(i).setGender(candidateGender);
+                Log.d("MyLog",candidate.names().toString());
             }
             JSONObject totalVotesJSON = allCandidatesJson.getJSONObject(8);
             for (int i = 0; i < allCandidatesJson.length() - 1; i++){

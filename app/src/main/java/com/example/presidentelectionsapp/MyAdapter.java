@@ -31,6 +31,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class MyAdapter extends BaseAdapter {
     Context context;
@@ -58,6 +59,7 @@ public class MyAdapter extends BaseAdapter {
 
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
+        StringBuilder unknownDataString = new StringBuilder();
 
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.row,parent,false);
@@ -68,7 +70,7 @@ public class MyAdapter extends BaseAdapter {
             holder.textPercent = (TextView) convertView.findViewById(R.id.textPercent);
             holder.candidateImageButton = convertView.findViewById(R.id.candidateImageButton);
             holder.checkBox = convertView.findViewById(R.id.checkBox);
-            holder.textGender = convertView.findViewById(R.id.textGender);
+            holder.textUnknown = convertView.findViewById(R.id.unknownData);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -113,7 +115,10 @@ public class MyAdapter extends BaseAdapter {
                 "Процент: " + (int)(Double.parseDouble(candidateList.get(position).getVotes())
                 / Double.parseDouble(candidateList.get(position).getTotalVotes()) * 100) + " %");
         File file = new File(PATH_TO_FILES + candidateList.get(position).getImage());
-        holder.textGender.setText("Пол: " + candidateList.get(position).getGender());
+        for(Map.Entry<String, String> pair: candidateList.get(position).getUnknownData().entrySet()){
+            unknownDataString.append(pair.getKey()).append(" ").append(pair.getValue()).append("\n");
+        }
+        holder.textUnknown.setText(unknownDataString);
         if(file.exists()){
             Bitmap savedBitmap = BitmapFactory.decodeFile(PATH_TO_FILES + candidateList.get(position).getImage());
             holder.candidateImageButton.setImageBitmap(savedBitmap);
@@ -135,7 +140,7 @@ public class MyAdapter extends BaseAdapter {
         TextView textSurname;
         TextView textVotes;
         TextView textPercent;
-        TextView textGender;
+        TextView textUnknown;
         ImageButton candidateImageButton;
         CheckBox checkBox;
     }
