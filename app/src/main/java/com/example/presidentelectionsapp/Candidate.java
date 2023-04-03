@@ -10,9 +10,10 @@ public class Candidate {
     private String image;
     private String votes;
     private String totalVotes;
+    private String gender;
     private boolean isChecked;
 
-    Candidate(String id, String firstname, String secondname, String party, String descriptions, String web, String image, String votes, String totalVotes, boolean isChecked){
+    Candidate(String id, String firstname, String secondname, String party, String descriptions, String web, String image, String votes, String totalVotes, String gender, boolean isChecked){
         this.id = id;
         this.firstname = firstname;
         this.secondname = secondname;
@@ -22,7 +23,22 @@ public class Candidate {
         this.image = image;
         this.votes = votes;
         this.totalVotes = totalVotes;
+        this.gender = gender;
         this.isChecked = isChecked;
+    }
+
+    Candidate(){
+        this.id = "";
+        this.firstname = "";
+        this.secondname = "";
+        this.party = "";
+        this.descriptions = "";
+        this.web = "";
+        this.image = "";
+        this.votes = "";
+        this.totalVotes = "";
+        this.gender = "";
+        this.isChecked = false;
     }
 
     public String getId() {
@@ -90,4 +106,7 @@ public class Candidate {
     public void setChecked(boolean checked) {
         isChecked = checked;
     }
+
+    public String getGender() { return gender; }
+    public void setGender(String gender) { this.gender = gender; }
 }

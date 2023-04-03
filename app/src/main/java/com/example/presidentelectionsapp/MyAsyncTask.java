@@ -65,17 +65,7 @@ class MyAsyncTask extends AsyncTask<String, Void, ArrayList<Candidate>> {
         }
         try {
             for (int i = 0; i < allCandidatesJson.length() - 1; i++) {
-                candidatesList.add(new Candidate(
-                    null,
-                null,
-                null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                     false));
+                candidatesList.add(new Candidate());
                 JSONObject candidate = allCandidatesJson.getJSONObject(i);
                 String candidateId = candidate.getString("id");
                 String candidateName = candidate.getString("firstname");
@@ -85,6 +75,10 @@ class MyAsyncTask extends AsyncTask<String, Void, ArrayList<Candidate>> {
                 String candidateWeb = candidate.getString("web");
                 String candidateImage = candidate.getString("image");
                 String candidateVotes = candidate.getString("votes");
+                String candidateGender = "no value";
+                if (candidate.has("gender")) {
+                    candidateGender = candidate.getString("gender");
+                }
                 candidatesList.get(i).setId(candidateId);
                 candidatesList.get(i).setFirstname(candidateName);
                 candidatesList.get(i).setSecondname(candidateSurname);
@@ -93,6 +87,7 @@ class MyAsyncTask extends AsyncTask<String, Void, ArrayList<Candidate>> {
                 candidatesList.get(i).setWeb(candidateWeb);
                 candidatesList.get(i).setImage(candidateImage);
                 candidatesList.get(i).setVotes(candidateVotes);
+                candidatesList.get(i).setGender(candidateGender);
             }
             JSONObject totalVotesJSON = allCandidatesJson.getJSONObject(8);
             for (int i = 0; i < allCandidatesJson.length() - 1; i++){

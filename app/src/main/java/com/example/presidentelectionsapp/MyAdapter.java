@@ -25,6 +25,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -66,6 +68,7 @@ public class MyAdapter extends BaseAdapter {
             holder.textPercent = (TextView) convertView.findViewById(R.id.textPercent);
             holder.candidateImageButton = convertView.findViewById(R.id.candidateImageButton);
             holder.checkBox = convertView.findViewById(R.id.checkBox);
+            holder.textGender = convertView.findViewById(R.id.textGender);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -110,28 +113,16 @@ public class MyAdapter extends BaseAdapter {
                 "Процент: " + (int)(Double.parseDouble(candidateList.get(position).getVotes())
                 / Double.parseDouble(candidateList.get(position).getTotalVotes()) * 100) + " %");
         File file = new File(PATH_TO_FILES + candidateList.get(position).getImage());
+        holder.textGender.setText("Пол: " + candidateList.get(position).getGender());
         if(file.exists()){
             Bitmap savedBitmap = BitmapFactory.decodeFile(PATH_TO_FILES + candidateList.get(position).getImage());
             holder.candidateImageButton.setImageBitmap(savedBitmap);
             Log.d("MyLog","YET DOWNLOADED ONLY FROM DEVICE MEMORY" + PATH_TO_FILES + candidateList.get(position).getImage());
         }
         else {
-            Glide.with(context)
-                .asBitmap()
-                .load("https://adlibtech.ru/elections/upload_images/" + candidateList.get(position).getImage())
-                .override(200, 200)
-                .into(new CustomTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                        Log.d("MyLog","DOWNLOADED FROM NET (FIRST)" + PATH_TO_FILES + candidateList.get(position).getImage());
-                        String pathToBitmap = saveImgToCacheWithPath(resource, candidateList.get(position).getImage());
-                        Bitmap savedBitmap = BitmapFactory.decodeFile(pathToBitmap);
-                        holder.candidateImageButton.setImageBitmap(savedBitmap);
-                    }
-                    @Override
-                    public void onLoadCleared(@Nullable Drawable placeholder) {
-                    }
-            });
+            ImageDownloadAsyncTask imageDownloadAsyncTask = new ImageDownloadAsyncTask(candidateList, position);
+            imageDownloadAsyncTask.execute("https://adlibtech.ru/elections/upload_images/" + candidateList.get(position).getImage());
+            Log.d("MyLog","NEW IMAGE DOWNLOADED");
         }
         return convertView;
     }
@@ -144,25 +135,8 @@ public class MyAdapter extends BaseAdapter {
         TextView textSurname;
         TextView textVotes;
         TextView textPercent;
+        TextView textGender;
         ImageButton candidateImageButton;
         CheckBox checkBox;
-    }
-    public String saveImgToCacheWithPath(Bitmap bitmap, @Nullable String name) {
-        File cachePath = null;
-        try {
-            cachePath = new File(context.getCacheDir(), "imagesElections");
-            cachePath.mkdirs();
-            FileOutputStream stream = new FileOutputStream(cachePath + "/" + name);
-            bitmap.compress(
-                    Bitmap.CompressFormat.PNG,
-                    100,
-                    stream);
-            stream.close();
-            Log.d("MyLog",cachePath.getAbsolutePath() + "/" + name);
-            return cachePath.getAbsolutePath() + "/" + name;
-        } catch (IOException e) {
-            Log.e("MyLog", "saveImgToCache error: " + bitmap, e);
-        }
-        return null;
     }
 }
